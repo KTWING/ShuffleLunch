@@ -41,4 +41,37 @@ class EmployeeController extends Controller
             'errors' => $errors,
         ], 'index');
     }
+
+    public function delete()
+    {
+        if (!$this->request->isPost()) {
+            throw new HttpNotFoundException();
+        }
+
+        $errors = [];
+
+        $employee = $this->databaseManager->get('Employee');
+        $id = $_POST['deleteNumber'];
+
+        $employees = $employee->fetchAllNames();
+        $maxID = array_key_last($employees) + 1;
+
+        if ($id < 1) {
+            $errors['deleteNumber'] = 'idは1以上で指定してください';
+        } elseif ($id > $maxID) {
+            $errors['deleteNumber'] = 'idは社員数以下にしてください';
+        }
+
+        if (!count($errors)) {
+            $employee->delete($employees[$id - 1]['name']);
+        }
+
+        $employees = $employee->fetchAllNames();
+
+        return $this->render([
+            'title' => '社員の登録',
+            'employees' => $employees,
+            'errors' => $errors,
+        ], 'index');
+    }
 }

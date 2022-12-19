@@ -38,7 +38,6 @@ class Application
         }
 
         $this->response->send();
-        // header("Location:/employee/create");
     }
 
     public function getRequest()
@@ -69,6 +68,7 @@ class Application
             '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
             '/employee' => ['controller' => 'employee', 'action' => 'index'],
             '/employee/create' => ['controller' => 'employee', 'action' => 'create'],
+            '/employee/delete' => ['controller' => 'employee', 'action' => 'delete'],
         ];
     }
 
